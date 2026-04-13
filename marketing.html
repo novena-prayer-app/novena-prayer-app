@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nós — The Modern Cloister</title>
+  <meta
+    name="description"
+    content="A Catholic prayer companion for 9-day novenas, quiet reflection, honest journaling, and the grace to keep praying whether the answer is yes, no, or not yet."
+  />
+  <style>
+    :root {
+      --parchment: #f5f2ed;
+      --parchment-dark: #e8e4dd;
+      --sage: #7c9070;
+      --sage-light: #a3b898;
+      --sage-faint: #f0f5ed;
+      --terracotta: #c4704b;
+      --terracotta-hover: #b5613d;
+      --gold: #b8963e;
+      --warm-tint: #f3ede6;
+      --dark: #2c2c2c;
+      --muted: #8a8a8a;
+      --card: #ffffff;
+      --divider: #e0ddd8;
+      --shadow: 0 20px 40px rgba(44, 44, 44, 0.08);
+      --shadow-soft: 0 10px 24px rgba(44, 44, 44, 0.06);
+      --radius-lg: 28px;
+      --radius-md: 18px;
+      --radius-sm: 12px;
+      --max-width: 1240px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--dark);
+      background:
+        radial-gradient(circle at top left, rgba(184, 150, 62, 0.1), transparent 22%),
+        radial-gradient(circle at 85% 15%, rgba(163, 184, 152, 0.16), transparent 26%),
+        linear-gradient(180deg, #fbf8f3 0%, var(--parchment) 24%, #f8f4ee 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.35;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.28) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.28) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.38), transparent 72%);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      width: min(calc(100% - 40px), var(--max-width));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid rgba(124, 144, 112, 0.22);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--terracotta), var(--gold));
+      box-shadow: 0 0 0 4px rgba(196, 112, 75, 0.12);
+    }
+
+    .serif {
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(245, 242, 237, 0.8);
+      border-bottom: 1px solid rgba(224, 221, 216, 0.85);
+    }
+
+    .topbar-inner {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand-mark {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-mark strong {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-mark span {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .top-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 14px;
+      color: #5f5a53;
+    }
+
+    .top-links a:hover {
+      color: var(--terracotta);
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 999px;
+      background: var(--terracotta);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border: 0;
+      box-shadow: 0 12px 24px rgba(196, 112, 75, 0.24);
+      transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-1px);
+      background: var(--terracotta-hover);
+      box-shadow: 0 16px 28px rgba(196, 112, 75, 0.28);
+    }
+
+    .cta.secondary {
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--dark);
+      border: 1px solid rgba(196, 112, 75, 0.2);
+      box-shadow: none;
+    }
+
+    .cta.secondary:hover {
+      background: rgba(196, 112, 75, 0.08);
+    }
+
+    .hero {
+      padding: 72px 0 56px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+      gap: 42px;
+      align-items: center;
+    }
+
+    .hero-copy h1 {
+      margin: 18px 0 18px;
+      font-size: clamp(48px, 7vw, 88px);
+      line-height: 0.94;
+      letter-spacing: -0.05em;
+      max-width: 10ch;
+    }
+
+    .hero-copy .lede {
+      margin: 0 0 26px;
+      max-width: 640px;
+      font-size: 19px;
+      color: #5f5a53;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 26px 0 0;
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid rgba(224, 221, 216, 0.95);
+      color: #5f5a53;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .hero-stage {
+      position: relative;
+      min-height: 720px;
+      display: grid;
+      place-items: center;
+    }
+
+    .halo {
+      position: absolute;
+      inset: 8% 10%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(184, 150, 62, 0.16) 0%, rgba(184, 150, 62, 0.06) 32%, transparent 70%);
+      filter: blur(12px);
+    }
+
+    .phone-stack {
+      position: relative;
+      width: min(100%, 430px);
+      aspect-ratio: 1242 / 2688;
+    }
+
+    .shot {
+      position: absolute;
+      overflow: hidden;
+      border-radius: 36px;
+      border: 10px solid rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow);
+      background: #fff;
+    }
+
+    .shot::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 26px;
+      box-shadow: inset 0 0 0 1px rgba(44, 44, 44, 0.05);
+      pointer-events: none;
+    }
+
+    .shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .shot-primary {
+      inset: 0;
+      z-index: 3;
+      transform: rotate(-3deg);
+    }
+
+    .shot-secondary {
+      width: 43%;
+      right: -5%;
+      bottom: 6%;
+      z-index: 4;
+      transform: rotate(8deg);
+    }
+
+    .shot-tertiary {
+      width: 38%;
+      left: -2%;
+      top: 9%;
+      z-index: 2;
+      transform: rotate(-11deg);
+    }
+
+    .quote-card {
+      position: absolute;
+      left: -7%;
+      bottom: 14%;
+      z-index: 5;
+      width: min(280px, 62%);
+      padding: 18px 18px 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(224, 221, 216, 0.95);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .quote-card p {
+      margin: 0 0 8px;
+      color: var(--dark);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .quote-card span {
+      color: var(--sage);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .section {
+      padding: 52px 0;
+    }
+
+    .section-head {
+      margin-bottom: 28px;
+      max-width: 760px;
+    }
+
+    .section-head h2 {
+      margin: 14px 0 12px;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+    }
+
+    .section-head p {
+      margin: 0;
+      font-size: 18px;
+      color: #5f5a53;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .value-card,
+    .flow-card,
+    .outcome-card,
+    .trust-card,
+    .screenshot-card {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(224, 221, 216, 0.95);
+      border-radius: 24px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .value-card {
+      padding: 24px;
+    }
+
+    .value-card .kicker,
+    .outcome-card .kicker,
+    .trust-card .kicker {
+      display: inline-flex;
+      margin-bottom: 14px;
+      color: var(--terracotta);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .value-card h3,
+    .outcome-card h3,
+    .trust-card h3,
+    .flow-card h3 {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1.05;
+    }
+
+    .value-card p,
+    .outcome-card p,
+    .trust-card p,
+    .flow-card p {
+      margin: 0;
+      color: #5f5a53;
+      font-size: 16px;
+    }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .flow-card {
+      position: relative;
+      padding: 22px;
+      min-height: 220px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(243, 237, 230, 0.9));
+    }
+
+    .flow-card .number {
+      display: inline-grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      margin-bottom: 18px;
+      background: rgba(124, 144, 112, 0.12);
+      color: var(--sage);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .screenshots-layout {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .showcase-main {
+      padding: 18px;
+    }
+
+    .showcase-main figure {
+      margin: 0;
+      overflow: hidden;
+      border-radius: 28px;
+      background: linear-gradient(180deg, var(--warm-tint), var(--sage-faint));
+    }
+
+    .showcase-main img {
+      width: 100%;
+      height: auto;
+    }
+
+    .showcase-caption {
+      padding: 18px 8px 4px;
+    }
+
+    .showcase-caption h3 {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 32px;
+      line-height: 1;
+    }
+
+    .showcase-caption p {
+      margin: 0;
+      color: #5f5a53;
+      font-size: 16px;
+    }
+
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .screenshot-card {
+      overflow: hidden;
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      background: linear-gradient(180deg, var(--warm-tint), #fff);
+    }
+
+    .screenshot-copy {
+      padding: 14px 16px 18px;
+    }
+
+    .screenshot-copy strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+
+    .screenshot-copy p {
+      margin: 0;
+      font-size: 15px;
+      color: #5f5a53;
+    }
+
+    .outcomes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .outcome-card {
+      padding: 24px;
+      min-height: 260px;
+    }
+
+    .outcome-card.answered .kicker { color: var(--gold); }
+    .outcome-card.waiting .kicker { color: var(--sage); }
+    .outcome-card.no .kicker { color: var(--terracotta); }
+
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .trust-card {
+      padding: 26px;
+    }
+
+    .trust-list {
+      display: grid;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .trust-item {
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(240, 245, 237, 0.8));
+      border: 1px solid rgba(224, 221, 216, 0.95);
+    }
+
+    .trust-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--terracotta);
+    }
+
+    .trust-item p {
+      margin: 0;
+      color: #5f5a53;
+      font-size: 15px;
+    }
+
+    .cta-band {
+      padding: 22px;
+      border-radius: 30px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.88), rgba(243, 237, 230, 0.98));
+      border: 1px solid rgba(224, 221, 216, 0.95);
+      box-shadow: var(--shadow);
+    }
+
+    .cta-band h2 {
+      margin: 12px 0 10px;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+    }
+
+    .cta-band p {
+      margin: 0;
+      max-width: 660px;
+      font-size: 18px;
+      color: #5f5a53;
+    }
+
+    .cta-band-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    footer {
+      padding: 40px 0 70px;
+      color: #6b675f;
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(224, 221, 216, 0.95);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-links a:hover {
+      color: var(--terracotta);
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .screenshots-layout,
+      .trust-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .value-grid,
+      .outcomes,
+      .flow-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-stage {
+        min-height: auto;
+        padding: 18px 0 10px;
+      }
+
+      .phone-stack {
+        width: min(100%, 380px);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .container {
+        width: min(calc(100% - 28px), var(--max-width));
+      }
+
+      .topbar-inner,
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .top-links {
+        flex-wrap: wrap;
+      }
+
+      .value-grid,
+      .outcomes,
+      .flow-grid,
+      .screenshot-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 42px;
+      }
+
+      .hero-copy .lede,
+      .section-head p,
+      .cta-band p {
+        font-size: 17px;
+      }
+
+      .quote-card {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        width: auto;
+        margin-top: 16px;
+      }
+
+      .shot-secondary {
+        right: -1%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand-mark" href="#top" aria-label="Nós marketing page">
+          <strong>Nós</strong>
+          <span>The Modern Cloister</span>
+        </a>
+        <nav class="top-links" aria-label="Page sections">
+          <a href="#why">Why Nós</a>
+          <a href="#flow">How It Works</a>
+          <a href="#screens">Screens</a>
+          <a href="#trust">Privacy</a>
+          <a class="cta" href="https://novena-prayer-app.github.io/nos-prayer-app/terms.html">Join the Beta</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">Catholic Prayer Companion</span>
+            <h1 class="serif">Where Discipline Becomes Devotion.</h1>
+            <p class="lede">
+              Nós is a quiet home for 9-day novenas, daily reflection, and honest prayer.
+              It does not treat prayer like a streak. It gives structure without pressure,
+              beauty without clutter, and room for the whole story, even when the answer is not yet.
+            </p>
+            <div class="hero-actions">
+              <a class="cta" href="https://novena-prayer-app.github.io/nos-prayer-app/terms.html">Join the TestFlight</a>
+              <a class="cta secondary" href="#screens">See the App</a>
+            </div>
+            <div class="hero-meta" aria-label="Product highlights">
+              <span>9-day guided novenas</span>
+              <span>Heart-Check after Day 9</span>
+              <span>Journaling and offline reading</span>
+              <span>No streaks. No shame.</span>
+            </div>
+          </div>
+
+          <div class="hero-stage" aria-hidden="true">
+            <div class="halo"></div>
+            <div class="phone-stack">
+              <div class="shot shot-tertiary">
+                <img src="./library.png" alt="" />
+              </div>
+              <div class="shot shot-primary">
+                <img src="./home.png" alt="Nós home screen" />
+              </div>
+              <div class="shot shot-secondary">
+                <img src="./novena.png" alt="Novena prayer screen" />
+              </div>
+            </div>
+            <div class="quote-card">
+              <p class="serif">A prayer app that makes room for yes, no, and still waiting.</p>
+              <span>The Heart-Check</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="why">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">Why Nós</span>
+            <h2 class="serif">Built like a chapel, not a dashboard.</h2>
+            <p>
+              Most prayer apps reward consistency like a productivity system. Nós was designed
+              to feel slower, warmer, and more honest. It is a companion for sacred time, not a tool for self-optimization.
+            </p>
+          </div>
+
+          <div class="value-grid">
+            <article class="value-card">
+              <span class="kicker">Quiet Design</span>
+              <h3>Stillness first.</h3>
+              <p>
+                Prayer screens are stripped of noise and built for reading slowly. Serif typography,
+                warm paper tones, and gentle pacing make the app feel handmade and reverent.
+              </p>
+            </article>
+            <article class="value-card">
+              <span class="kicker">Honest Prayer</span>
+              <h3>No guilt loops.</h3>
+              <p>
+                Nós does not shame missed days or turn devotion into streak anxiety. The experience
+                stays patient, grounded, and faithful to the actual rhythm of prayer.
+              </p>
+            </article>
+            <article class="value-card">
+              <span class="kicker">Whole Story</span>
+              <h3>Room for every answer.</h3>
+              <p>
+                After Day 9, the Heart-Check acknowledges three realities: answered prayer,
+                waiting, and peace in the no. That distinction is central to the product, not an afterthought.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="flow">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">How It Works</span>
+            <h2 class="serif">A 9-day rhythm that stays personal.</h2>
+            <p>
+              The flow is simple by design: choose a novena, name a brief intention, pray day by day,
+              and reflect honestly on what happened. The app supports the practice without crowding it.
+            </p>
+          </div>
+
+          <div class="flow-grid">
+            <article class="flow-card">
+              <div class="number">1</div>
+              <h3>Choose a Novena</h3>
+              <p>Browse a calm library of Catholic novenas organized by patron and situation.</p>
+            </article>
+            <article class="flow-card">
+              <div class="number">2</div>
+              <h3>Name Your Intention</h3>
+              <p>Capture the heart of your prayer in just a few words, the way you would carry it into a chapel.</p>
+            </article>
+            <article class="flow-card">
+              <div class="number">3</div>
+              <h3>Pray Each Day</h3>
+              <p>Read the day’s prayer, additional prayers, and reflection in an immersive format built for attention.</p>
+            </article>
+            <article class="flow-card">
+              <div class="number">4</div>
+              <h3>Complete the Heart-Check</h3>
+              <p>Mark the prayer answered, still waiting, or no, then continue into testimony, patient waiting, or peace.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="screens">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">Inside the App</span>
+            <h2 class="serif">A complete prayer flow, screen by screen.</h2>
+            <p>
+              The app guides users from library to prayer to journal with a visual language rooted in parchment,
+              sage, terracotta, and gold. Every screen is meant to feel calm, legible, and intentional.
+            </p>
+          </div>
+
+          <div class="screenshots-layout">
+            <article class="showcase-main value-card">
+              <figure>
+                <img src="./home.png" alt="Home screen with active novena cards" />
+              </figure>
+              <div class="showcase-caption">
+                <h3 class="serif">Your prayer journey lives here.</h3>
+                <p>
+                  Home centers the current novena while keeping waiting and completed cycles close at hand.
+                  It feels more like a prayer desk than a task list.
+                </p>
+              </div>
+            </article>
+
+            <div class="screenshot-grid">
+              <article class="screenshot-card">
+                <img src="./library.png" alt="Library screen of novenas" />
+                <div class="screenshot-copy">
+                  <strong>Library</strong>
+                  <p>Find a novena by patron, feast, or season of need.</p>
+                </div>
+              </article>
+              <article class="screenshot-card">
+                <img src="./novena.png" alt="Novena prayer screen" />
+                <div class="screenshot-copy">
+                  <strong>Prayer View</strong>
+                  <p>Read the day’s text in an uncluttered, immersive layout.</p>
+                </div>
+              </article>
+              <article class="screenshot-card">
+                <img src="./additional-prayers.png" alt="Additional prayers screen" />
+                <div class="screenshot-copy">
+                  <strong>Additional Prayers</strong>
+                  <p>Show recurring prayers in the right place within the novena flow.</p>
+                </div>
+              </article>
+              <article class="screenshot-card">
+                <img src="./calendar.png" alt="Calendar and progress screen" />
+                <div class="screenshot-copy">
+                  <strong>Calendar</strong>
+                  <p>See where each cycle lives in time without turning devotion into pressure.</p>
+                </div>
+              </article>
+              <article class="screenshot-card">
+                <img src="./journal.png" alt="Journal screen" />
+                <div class="screenshot-copy">
+                  <strong>Journal</strong>
+                  <p>Save the quiet details that often become the testimony later.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <span class="eyebrow">The Heart-Check</span>
+            <h2 class="serif">The part most prayer apps ignore.</h2>
+            <p>
+              After the ninth day, Nós does not assume triumph. It asks what happened,
+              then meets the answer with reverence instead of simplification.
+            </p>
+          </div>
+
+          <div class="outcomes">
+            <article class="outcome-card answered">
+              <span class="kicker">Answered</span>
+              <h3>Give thanks without spectacle.</h3>
+              <p>
+                Testimony is treated like something earned. Gold accents mark the light breaking through,
+                while the journal keeps the tone grounded and personal.
+              </p>
+            </article>
+            <article class="outcome-card waiting">
+              <span class="kicker">Waiting</span>
+              <h3>Stay with the prayer.</h3>
+              <p>
+                Some novenas become longer stories. The waiting path keeps the cycle present without turning
+                uncertainty into failure.
+              </p>
+            </article>
+            <article class="outcome-card no">
+              <span class="kicker">Peace in the No</span>
+              <h3>Honor the hard answer.</h3>
+              <p>
+                Nós treats no as a valid and dignified spiritual reality. The app provides a quiet space
+                for acceptance, not a dead end.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="trust">
+        <div class="container trust-grid">
+          <article class="trust-card">
+            <span class="kicker">Privacy</span>
+            <h3 class="serif">Your prayer life stays yours.</h3>
+            <p>
+              Intentions, journal entries, and prayer progress are treated with care. The product is designed
+              to be intimate, not extractive.
+            </p>
+            <div class="trust-list">
+              <div class="trust-item">
+                <strong>No ads</strong>
+                <p>No ad networks, no social feed pressure, and no attention hacks layered onto prayer.</p>
+              </div>
+              <div class="trust-item">
+                <strong>User-scoped data</strong>
+                <p>Prayer data is stored securely and separated by user, with privacy built into the backend model.</p>
+              </div>
+              <div class="trust-item">
+                <strong>Offline-friendly reading</strong>
+                <p>Core prayer content is cached for quiet use even when connection is limited.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="trust-card">
+            <span class="kicker">Designed For</span>
+            <h3 class="serif">People who want a quieter way to pray.</h3>
+            <p>
+              Whether you are starting your first novena or returning to a long-loved devotion, Nós is built
+              to feel gentle, reverent, and clear. It supports practice without trying to dominate it.
+            </p>
+            <div class="trust-list">
+              <div class="trust-item">
+                <strong>Daily structure</strong>
+                <p>A steady framework for prayer without gamification.</p>
+              </div>
+              <div class="trust-item">
+                <strong>Beautiful reading</strong>
+                <p>Typography and spacing that slow the experience down in the right way.</p>
+              </div>
+              <div class="trust-item">
+                <strong>Honest reflection</strong>
+                <p>A place to carry what is unfolding, not just what is resolved.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="cta-band">
+            <span class="eyebrow">Now in Beta</span>
+            <h2 class="serif">Bring your next novena into a quieter place.</h2>
+            <p>
+              Join the TestFlight placeholder now, explore the current app flow, and see how a Catholic prayer
+              companion can feel when it is shaped around devotion instead of urgency.
+            </p>
+            <div class="cta-band-actions">
+              <a class="cta" href="https://novena-prayer-app.github.io/nos-prayer-app/terms.html">Open the Beta Link</a>
+              <a class="cta secondary" href="./privacy.html">Read the Privacy Policy</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <div>
+          <strong class="serif" style="font-size: 20px;">Nós</strong><br />
+          <span>The Modern Cloister</span>
+        </div>
+        <div class="footer-links">
+          <a href="./privacy.html">Privacy</a>
+          <a href="./terms.html">Terms</a>
+          <a href="#top">Back to top</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
