@@ -3,68 +3,212 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Novena Tracker — Redirecting...</title>
+  <title>Nós — Opening the app…</title>
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
       font-family: Georgia, serif;
-      background: #F5F2ED;
+      background-color: #F5F2ED;
       color: #2C2C2C;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      margin: 0;
+      padding: 32px 24px;
+    }
+
+    .card {
+      background: #FFFFFF;
+      border-radius: 16px;
+      padding: 48px 40px;
+      max-width: 400px;
+      width: 100%;
       text-align: center;
-      padding: 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
     }
-    .container { max-width: 400px; }
-    h1 { font-size: 24px; margin-bottom: 12px; }
-    p { font-size: 16px; color: #8A8A8A; line-height: 1.5; }
-    a {
-      display: inline-block;
-      margin-top: 20px;
-      padding: 12px 32px;
+
+    .app-name {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #C4704B;
+      margin-bottom: 20px;
+    }
+
+    .icon {
+      width: 72px;
+      height: 72px;
+      background: #F5F2ED;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    /* Simple candle flame SVG inline */
+    .icon svg { width: 32px; height: 32px; }
+
+    h1 {
+      font-size: 24px;
+      font-weight: normal;
+      color: #2C2C2C;
+      margin-bottom: 12px;
+    }
+
+    .subtext {
+      font-size: 15px;
+      color: #8A8A8A;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* Spinner shown while trying to open app */
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #E0DDD8;
+      border-top-color: #C4704B;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 32px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Fallback button — hidden until timeout */
+    .open-btn {
+      display: none;
+      width: 100%;
+      padding: 16px 32px;
       background: #C4704B;
-      color: white;
+      color: #FFFFFF;
       text-decoration: none;
-      border-radius: 8px;
+      border-radius: 28px;
+      font-family: Georgia, serif;
       font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      transition: background 0.15s;
+      cursor: pointer;
+      border: none;
     }
+    .open-btn:hover { background: #B5613D; }
+
+    .fallback-note {
+      display: none;
+      font-size: 14px;
+      color: #8A8A8A;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .store-link {
+      display: none;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #8A8A8A;
+    }
+    .store-link a { color: #C4704B; text-decoration: none; }
+    .store-link a:hover { text-decoration: underline; }
+
+    footer {
+      margin-top: 40px;
+      font-size: 12px;
+      color: #B0ADA8;
+    }
+    footer a { color: #C4704B; text-decoration: none; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Novena Tracker</h1>
-    <p>Redirecting you to the app...</p>
-    <p id="fallback" style="display:none;">
-      If the app did not open automatically, tap the button below.
+  <div class="card">
+    <div class="app-name">Nós &nbsp;·&nbsp; Catholic Prayer</div>
+
+    <div class="icon">
+      <!-- Candle flame — brand mark -->
+      <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16 4C16 4 11 10 11 15.5C11 18.538 13.239 21 16 21C18.761 21 21 18.538 21 15.5C21 10 16 4 16 4Z" fill="#C4704B"/>
+        <path d="M16 21V28" stroke="#E0DDD8" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M12 28H20" stroke="#E0DDD8" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <h1 id="heading">Opening Nós…</h1>
+    <p class="subtext" id="subtext">
+      Taking you back to your novena.
     </p>
-    <a id="open-app" style="display:none;" href="#">Open Novena Tracker</a>
+
+    <div class="spinner" id="spinner"></div>
+
+    <p class="fallback-note" id="fallback-note">
+      The app didn't open automatically.<br>
+      Tap the button below to continue.
+    </p>
+
+    <a class="open-btn" id="open-btn" href="#">Open in Nós</a>
+
+    <div class="store-link" id="store-link">
+      Don't have the app?
+      <a href="https://apps.apple.com/app/id6761399974" target="_blank">Download on the App Store</a>
+    </div>
+
+    <footer>
+      <a href="./privacy.html">Privacy Policy</a>
+      &nbsp;·&nbsp;
+      <a href="./terms.html">Terms of Service</a>
+    </footer>
   </div>
 
   <script>
-    // Supabase appends tokens as a hash fragment: #access_token=...&type=recovery
-    // We need to forward those to the app's deep link
-    var hash = window.location.hash;
-    var params = new URLSearchParams(window.location.search);
+    (function () {
+      // Supabase appends tokens as a URL hash fragment:
+      //   #access_token=...&refresh_token=...&type=recovery
+      // We forward the full fragment to the app deep link so
+      // services/supabase.ts setupDeepLinkHandler() can parse it.
 
-    // Supabase may use either hash or query params depending on flow
-    var fragment = hash || '';
-    var query = window.location.search || '';
+      var hash  = window.location.hash  || '';
+      var query = window.location.search || '';
+      var type  = '';
 
-    // Build the deep link
-    var deepLink = 'novenatracker://reset-password' + fragment + query;
+      // Detect flow type from hash params
+      try {
+        var hashParams = new URLSearchParams(hash.replace(/^#/, ''));
+        type = hashParams.get('type') || '';
+      } catch (e) {}
 
-    // Try to open the app immediately
-    window.location.href = deepLink;
+      // Build the correct deep link path based on flow type
+      var path = 'reset-password';
+      if (type === 'signup' || type === 'email_change') {
+        path = 'auth/confirm';
+      }
 
-    // Show fallback button after 2 seconds if the app didn't open
-    setTimeout(function() {
-      document.getElementById('fallback').style.display = 'block';
-      var btn = document.getElementById('open-app');
-      btn.style.display = 'inline-block';
-      btn.href = deepLink;
-    }, 2000);
+      var deepLink = 'nos-prayer-app://' + path + hash + query;
+
+      // Update heading to match flow
+      if (type === 'signup') {
+        document.getElementById('heading').textContent  = 'Confirming your account…';
+        document.getElementById('subtext').textContent  = 'Almost there — taking you back to Nós.';
+        document.getElementById('open-btn').textContent = 'Open Nós';
+      } else if (type === 'recovery') {
+        document.getElementById('heading').textContent  = 'Opening Nós…';
+        document.getElementById('subtext').textContent  = 'Taking you to the password reset screen.';
+        document.getElementById('open-btn').textContent = 'Reset Password in Nós';
+      }
+
+      // Try to open the app immediately
+      window.location.href = deepLink;
+
+      // After 2.5s, show the manual fallback button if the page is still open
+      // (if the app opened, the browser tab would be backgrounded/closed)
+      setTimeout(function () {
+        document.getElementById('spinner').style.display       = 'none';
+        document.getElementById('fallback-note').style.display = 'block';
+        var btn = document.getElementById('open-btn');
+        btn.href           = deepLink;
+        btn.style.display  = 'block';
+        document.getElementById('store-link').style.display    = 'block';
+      }, 2500);
+    })();
   </script>
 </body>
 </html>
